@@ -1,0 +1,185 @@
+import java.util.Scanner; // Importa a classe Scanner para ler a entrada do usuário
+import java.util.ArrayList; // Importa a classe ArrayList para armazenar as tarefas
+import java.time.LocalDate; // Importa a classe LocalDate para obter a data atual
+import java.util.Arrays;
+
+public class Task {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in); // Cria um objeto Scanner para ler a entrada do usuário
+        
+
+        String[] usuario ={"David","Eriel","Alacoque"}; // Define o nome de usuário correto
+        String[] senha = {"david","eriel","alacoque"}; // Define a senha correta
+        String[] categoria = {"alta","medio","baixa"};
+        boolean loginSucesso = false; // Variável para verificar se o login foi bem sucedido
+        
+           // Loop para solicitar o login do usuário até que seja bem sucedido
+        while (!loginSucesso) {
+            // Imprime a tela de login
+            System.out.println("\n---------------------");
+            System.out.println("   TELA DE LOGIN");
+            System.out.println("---------------------");
+            System.out.print("Usuário: ");
+            String usuarioDigitado = sc.nextLine(); // Lê o nome de usuário digitado pelo usuário
+            System.out.print("Senha: ");
+            String senhaDigitada = sc.nextLine(); // Lê a senha digitada pelo usuário
+
+            /* Verifica se o nome de usuário e a senha digitados estão corretos
+               na posição certa
+            */
+            if (usuario[0].equals(usuarioDigitado) &&
+                   senha[0].equals(senhaDigitada)||
+                    usuario[1].equals(usuarioDigitado)&&
+                    senha[1].equals(senhaDigitada)||
+                    usuario[2].equals(usuarioDigitado)&&
+                    senha[2].equals(senhaDigitada)) {
+                
+                loginSucesso = true; // Se o login for bem sucedido, define loginSucesso como true
+                System.out.println("\nLogin bem sucedido! Bem-vindo, ");
+            } else {
+                // Se o login falhar, imprime uma mensagem de erro e o loop continua
+                System.out.println("\nUsuário ou senha incorretos. Tente novamente.");
+            }
+        }
+
+        // Cria listas para armazenar os títulos, descrições e datas das tarefas
+        ArrayList<String> titulo = new ArrayList<String>();
+        ArrayList<String> tarefas = new ArrayList<String>();
+        ArrayList<LocalDate> datas = new ArrayList<LocalDate>();
+        //ArrayList<String> categoria = new ArrayList<String>();
+        int opcao; // Variável para armazenar a opção escolhida pelo usuário no menu
+
+        // Loop do menu de opções
+        do {
+            // Imprime o menu de opções
+            System.out.println("\n---------------------");
+            System.out.println("   MENU DE OPÇÕES");
+            System.out.println("---------------------");
+            System.out.println("1. Adicionar tarefa");
+            System.out.println("2. Exibir todas as tarefas");
+            System.out.println("3. Editar tarefa");
+            System.out.println("4. Pesquisar tarefa por ID");
+            System.out.println("5. pesquisar por categoria");
+            System.out.println("6. Sair");
+            System.out.print("Escolha uma opção: ");
+            opcao = sc.nextInt(); // Lê a opção escolhida pelo usuário
+            sc.nextLine(); // Limpa o buffer do Scanner
+
+            // Switch para executar a ação correspondente à opção escolhida
+            switch (opcao) {
+                case 1:{
+                    // Opção para adicionar uma nova tarefa
+                    System.out.println("\n---------------------");
+                    System.out.println("   ADICIONAR TAREFA");
+                    System.out.println("---------------------");
+                    System.out.print("Titulo: ");
+                    String novoTitulo = sc.nextLine(); // Lê o título da nova tarefa
+                    titulo.add(novoTitulo); // Adiciona o título à lista de títulos
+                    System.out.print("Digite a nova tarefa: ");
+                    String novaTarefa = sc.nextLine(); // Lê a descrição da nova tarefa
+                    System.out.println("Digite uma categoria.");
+                    System.out.println("1.alta \n 3.baixa \n 2.media");
+                    int novaCategoria = sc.nextInt();
+                    tarefas.add(novaTarefa); // Adiciona a descrição à lista de tarefas
+                    
+                    datas.add(LocalDate.now()); // Adiciona a data atual à lista de datas
+                    System.out.println("\nTarefa adicionada com sucesso: "
+                            + novaTarefa);
+                }
+                break;
+                case 2:{
+                    // Opção para exibir todas as tarefas
+                    System.out.println("\n---------------------");
+                    System.out.println("   EXIBIR TAREFAS");
+                    System.out.println("---------------------");
+                    if (tarefas.isEmpty()) {
+                        // Se não há tarefas, imprime uma mensagem informando isso
+                        System.out.println("Não há tarefas para exibir.");
+                    } else {
+                        // Se há tarefas, imprime todas elas
+                        System.out.println("Tarefas:");
+                        for (int i = 0; i < tarefas.size(); i++) {
+                            System.out.println((i + 1) + ". " + titulo.get(i) +
+                                    ": \n" + tarefas.get(i) + " (adicionada em "
+                                    + datas.get(i) + ")");
+                        }
+                    }
+                }
+                break;   
+                case 3:{
+                    // Opção para editar uma tarefa existente
+                    System.out.println("\n---------------------");
+                    System.out.println("   EDITAR TAREFA");
+                    System.out.println("---------------------");
+                    if (tarefas.isEmpty()) {
+                        // Se não há tarefas, imprime uma mensagem informando isso
+                        System.out.println("Não há tarefas para editar.");
+                    } else {
+                        // Se há tarefas, solicita ao usuário que escolha uma para editar
+                        System.out.println("Digite o número da tarefa"
+                                + " que deseja editar:");
+                        for (int i = 0; i < tarefas.size(); i++) {
+                            // Imprime todas as tarefas para o usuário escolher
+                            System.out.println((i + 1) + ". " + tarefas.get(i));
+                        }
+                        int tarefaEscolhida = sc.nextInt() - 1; // Lê a tarefa escolhida pelo usuário
+                        sc.nextLine(); // Limpa o buffer do Scanner
+                        System.out.print("Digite a nova descrição da tarefa: ");
+                        String novaDescricao = sc.nextLine(); // Lê a nova descrição da tarefa
+                        tarefas.set(tarefaEscolhida, novaDescricao); // Atualiza a descrição da tarefa escolhida
+                        System.out.println("\nTarefa atualizada com sucesso!");
+                    }
+                }
+                break;
+                case 4: {
+                // Opção para listar tarefa por código
+                System.out.println("\n---------------------");
+                System.out.println("   LISTAR TAREFA POR CÓDIGO");
+                System.out.println("---------------------");
+                System.out.print("Digite o código da tarefa: ");
+                int codigo = sc.nextInt(); // Lê o código da tarefa
+                sc.nextLine(); // Limpa o buffer do Scanner
+
+                // Verifica se o código é válido
+                if (codigo < 0 || codigo >= titulo.size()) {
+                    System.out.println("Código de tarefa inválido.");
+                } else {
+                    // Se o código for válido, imprime a tarefa correspondente
+                    System.out.println("Título: " + titulo.get(codigo));
+                    System.out.println("Tarefa: " + tarefas.get(codigo));
+                    System.out.println("Data: " + datas.get(codigo));
+                }
+            }
+            break;
+                case 5: {
+                    System.out.println("\n---------------------");
+                    System.out.println("   Listar por categoria  ");
+                    System.out.println("---------------------");
+                    System.out.println("Digite a categoria :");
+                    String categoriaDigitada =sc.nextLine();
+                        
+                    for (categoria[0].()){
+                        
+                        
+                    }
+                }
+                case 6:{
+                    // Opção para sair do programa
+                    System.out.println("\n---------------------");
+                    System.out.println("   SAIR");
+                    System.out.println("---------------------");
+                    System.out.println("Saindo do programa...");
+                    System.exit(0);
+                }
+                break;
+                
+
+                default:
+                    // Se o usuário digitar uma opção inválida, imprime uma mensagem de erro
+                    System.out.println("\nOpção inválida. Por favor,"
+                            + " escolha uma opção válida.");
+            }
+        } while (opcao != 4); // O loop do menu continua até que o usuário escolha a opção para sair
+    }
+}
+
