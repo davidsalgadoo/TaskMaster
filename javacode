@@ -1,32 +1,30 @@
-import java.util.Scanner; // Importa a classe Scanner para ler a entrada do usuário
-import java.util.ArrayList; // Importa a classe ArrayList para armazenar as tarefas
-import java.time.LocalDate; // Importa a classe LocalDate para obter a data atual
-import java.util.Arrays;
+import java.util.Scanner; // Importa a classe Scanner do pacote java.util, que é usada para obter a entrada do usuário.
+import java.util.ArrayList; // Importa a classe ArrayList do pacote java.util, que é usada para armazenar listas de objetos.
+import java.time.LocalDate; // Importa a classe LocalDate do pacote java.time, que é usada para representar uma data (ano, mês, dia).
+import java.util.Arrays; // Importa a classe Arrays do pacote java.util, que é usada para manipular arrays.
 
-public class Task {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in); // Cria um objeto Scanner para ler a entrada do usuário
-        
+public class Task { 
+    public static void main(String[] args) { 
+        Scanner sc = new Scanner(System.in); // Cria um objeto Scanner para ler a entrada do usuário.
 
-        String[] usuario ={"David","Eriel","Alacoque"}; // Define o nome de usuário correto
-        String[] senha = {"david","eriel","alacoque"}; // Define a senha correta
-        String[] categoria = {"alta","medio","baixa"};
-        boolean loginSucesso = false; // Variável para verificar se o login foi bem sucedido
+        // Define arrays de strings para armazenar os nomes de usuário e senhas.
+        String[] usuario ={"David","Eriel","Alacoque"};
+        String[] senha = {"david","eriel","alacoque"};
         
-           // Loop para solicitar o login do usuário até que seja bem sucedido
+        boolean loginSucesso = false; // Define uma variável booleana para verificar se o login foi bem-sucedido.
+        
+        // Loop while para continuar solicitando o login até que seja bem-sucedido.
         while (!loginSucesso) {
-            // Imprime a tela de login
+            // Solicita ao usuário que insira seu nome de usuário e senha.
             System.out.println("\n---------------------");
             System.out.println("   TELA DE LOGIN");
             System.out.println("---------------------");
             System.out.print("Usuário: ");
-            String usuarioDigitado = sc.nextLine(); // Lê o nome de usuário digitado pelo usuário
+            String usuarioDigitado = sc.nextLine();
             System.out.print("Senha: ");
-            String senhaDigitada = sc.nextLine(); // Lê a senha digitada pelo usuário
+            String senhaDigitada = sc.nextLine();
 
-            /* Verifica se o nome de usuário e a senha digitados estão corretos
-               na posição certa
-            */
+            // Verifica se o nome de usuário e a senha digitados correspondem a algum dos usuários e senhas definidos.
             if (usuario[0].equals(usuarioDigitado) &&
                    senha[0].equals(senhaDigitada)||
                     usuario[1].equals(usuarioDigitado)&&
@@ -34,152 +32,166 @@ public class Task {
                     usuario[2].equals(usuarioDigitado)&&
                     senha[2].equals(senhaDigitada)) {
                 
-                loginSucesso = true; // Se o login for bem sucedido, define loginSucesso como true
-                System.out.println("\nLogin bem sucedido! Bem-vindo, ");
+                loginSucesso = true; // Se o login for bem-sucedido, define loginSucesso como true.
+                System.out.println("\nLogin bem sucedido! Bem-vindo ao TaskMaster"); // Imprime uma mensagem de boas-vindas.
             } else {
-                // Se o login falhar, imprime uma mensagem de erro e o loop continua
-                System.out.println("\nUsuário ou senha incorretos. Tente novamente.");
+                System.out.println("\nUsuário ou senha incorretos. Tente novamente."); // Se o login falhar, imprime uma mensagem de erro.
             }
         }
 
-        // Cria listas para armazenar os títulos, descrições e datas das tarefas
+        // Cria ArrayLists para armazenar os detalhes das tarefas.
         ArrayList<String> titulo = new ArrayList<String>();
         ArrayList<String> tarefas = new ArrayList<String>();
         ArrayList<LocalDate> datas = new ArrayList<LocalDate>();
-        //ArrayList<String> categoria = new ArrayList<String>();
-        int opcao; // Variável para armazenar a opção escolhida pelo usuário no menu
+        ArrayList<String> prioridades = new ArrayList<String>();
+        ArrayList<String> status = new ArrayList<String>();
 
-        // Loop do menu de opções
+        // Adiciona algumas tarefas iniciais às listas.
+        titulo.addAll(Arrays.asList("Curso", "escola", "CSS"));
+        tarefas.addAll(Arrays.asList("Apender a programar no VSCODE", "elaborar brincadeirs criativas para as crianças do segundo grau", "treinar e desenvolver projetos em HTML"));
+        datas.addAll(Arrays.asList(LocalDate.now(), LocalDate.now(), LocalDate.now()));
+        prioridades.addAll(Arrays.asList("Alta", "##", "alta"));
+        status.addAll(Arrays.asList("pedente", "finalizada", "pendente"));
+
+        int opcao; // Define uma variável para armazenar a opção escolhida pelo usuário no menu.
+
+        // Loop do-while para continuar exibindo o menu até que o usuário escolha sair.
         do {
-            // Imprime o menu de opções
-            System.out.println("\n---------------------");
-            System.out.println("   MENU DE OPÇÕES");
-            System.out.println("---------------------");
-            System.out.println("1. Adicionar tarefa");
-            System.out.println("2. Exibir todas as tarefas");
-            System.out.println("3. Editar tarefa");
-            System.out.println("4. Pesquisar tarefa por ID");
-            System.out.println("5. pesquisar por categoria");
-            System.out.println("6. Sair");
+            // Exibe o menu de opções.
+            System.out.println("\n*************************************");
+            System.out.println("             TaskMaster           ");
+            System.out.println("*************************************");
+            System.out.println("* 1. Adicionar tarefa               *");
+            System.out.println("* 2. Exibir todas as tarefas        *");
+            System.out.println("* 3. Editar tarefa                  *");
+            System.out.println("* 4. Pesquisar tarefa por ID        *");
+            System.out.println("* 5. Excluir tarefa                 *");
+            System.out.println("* 6. Sair                           *");
+            System.out.println("*************************************");
             System.out.print("Escolha uma opção: ");
-            opcao = sc.nextInt(); // Lê a opção escolhida pelo usuário
-            sc.nextLine(); // Limpa o buffer do Scanner
 
-            // Switch para executar a ação correspondente à opção escolhida
+            opcao = sc.nextInt(); // Lê a opção escolhida pelo usuário.
+            sc.nextLine(); // Limpa o buffer do Scanner.
+
+            // Switch case para executar a ação correspondente à opção escolhida.
             switch (opcao) {
-                case 1:{
-                    // Opção para adicionar uma nova tarefa
+                case 1:{ // Opção 1: Adicionar tarefa.
                     System.out.println("\n---------------------");
                     System.out.println("   ADICIONAR TAREFA");
                     System.out.println("---------------------");
                     System.out.print("Titulo: ");
-                    String novoTitulo = sc.nextLine(); // Lê o título da nova tarefa
-                    titulo.add(novoTitulo); // Adiciona o título à lista de títulos
+                    String novoTitulo = sc.nextLine(); // Lê o título da nova tarefa.
+                    titulo.add(novoTitulo); // Adiciona o título à lista de títulos.
                     System.out.print("Digite a nova tarefa: ");
-                    String novaTarefa = sc.nextLine(); // Lê a descrição da nova tarefa
-                    System.out.println("Digite uma categoria.");
-                    System.out.println("1.alta \n 3.baixa \n 2.media");
-                    int novaCategoria = sc.nextInt();
-                    tarefas.add(novaTarefa); // Adiciona a descrição à lista de tarefas
-                    
-                    datas.add(LocalDate.now()); // Adiciona a data atual à lista de datas
-                    System.out.println("\nTarefa adicionada com sucesso: "
-                            + novaTarefa);
+                    String novaTarefa = sc.nextLine(); // Lê a descrição da nova tarefa.
+                    tarefas.add(novaTarefa); // Adiciona a descrição à lista de tarefas.
+                    datas.add(LocalDate.now()); // Adiciona a data atual à lista de datas.
+                    System.out.print("Prioridade (Alta, Média, Baixa): "); 
+                    String novaPrioridade = sc.nextLine(); // Lê a prioridade da nova tarefa.
+                    prioridades.add(novaPrioridade); // Adiciona a prioridade à lista de prioridades.
+                    System.out.print("Status (A fazer, Em progresso, Concluído): "); 
+                    String novoStatus = sc.nextLine(); // Lê o status da nova tarefa.
+                    status.add(novoStatus); // Adiciona o status à lista de status.
+                    System.out.println("\nTarefa adicionada com sucesso: " + novaTarefa); // Imprime uma mensagem de sucesso.
                 }
                 break;
-                case 2:{
-                    // Opção para exibir todas as tarefas
+                case 2:{ // Opção 2: Exibir todas as tarefas.
                     System.out.println("\n---------------------");
                     System.out.println("   EXIBIR TAREFAS");
                     System.out.println("---------------------");
-                    if (tarefas.isEmpty()) {
-                        // Se não há tarefas, imprime uma mensagem informando isso
-                        System.out.println("Não há tarefas para exibir.");
-                    } else {
-                        // Se há tarefas, imprime todas elas
-                        System.out.println("Tarefas:");
-                        for (int i = 0; i < tarefas.size(); i++) {
+                    if (tarefas.isEmpty()) { // Verifica se a lista de tarefas está vazia.
+                        System.out.println("Não há tarefas para exibir."); // Se estiver vazia, imprime uma mensagem informando que não há tarefas.
+                    } else { // Se a lista de tarefas não estiver vazia...
+                        System.out.println("Tarefas:"); // Imprime o título "Tarefas:".
+                        for (int i = 0; i < tarefas.size(); i++) { // Percorre a lista de tarefas.
+                            // Para cada tarefa, imprime o número da tarefa, o título, a descrição, a data de adição, a prioridade e o status.
                             System.out.println((i + 1) + ". " + titulo.get(i) +
                                     ": \n" + tarefas.get(i) + " (adicionada em "
-                                    + datas.get(i) + ")");
+                                    + datas.get(i) + ", prioridade: " + prioridades.get(i)
+                                    + ", status: " + status.get(i) + ")"); 
                         }
                     }
                 }
                 break;   
-                case 3:{
-                    // Opção para editar uma tarefa existente
+                case 3:{ // Opção 3: Editar uma tarefa.
                     System.out.println("\n---------------------");
                     System.out.println("   EDITAR TAREFA");
                     System.out.println("---------------------");
-                    if (tarefas.isEmpty()) {
-                        // Se não há tarefas, imprime uma mensagem informando isso
-                        System.out.println("Não há tarefas para editar.");
-                    } else {
-                        // Se há tarefas, solicita ao usuário que escolha uma para editar
+                    if (tarefas.isEmpty()) { // Verifica se a lista de tarefas está vazia.
+                        System.out.println("Não há tarefas para editar."); // Se estiver vazia, imprime uma mensagem informando que não há tarefas para editar.
+                    } else { // Se a lista de tarefas não estiver vazia...
                         System.out.println("Digite o número da tarefa"
-                                + " que deseja editar:");
-                        for (int i = 0; i < tarefas.size(); i++) {
-                            // Imprime todas as tarefas para o usuário escolher
-                            System.out.println((i + 1) + ". " + tarefas.get(i));
+                                + " que deseja editar:"); // Solicita ao usuário que digite o número da tarefa que deseja editar.
+                        for (int i = 0; i < tarefas.size(); i++) { // Percorre a lista de tarefas.
+                            System.out.println((i + 1) + ". " + tarefas.get(i)); // Para cada tarefa, imprime o número da tarefa e a descrição.
                         }
-                        int tarefaEscolhida = sc.nextInt() - 1; // Lê a tarefa escolhida pelo usuário
-                        sc.nextLine(); // Limpa o buffer do Scanner
-                        System.out.print("Digite a nova descrição da tarefa: ");
-                        String novaDescricao = sc.nextLine(); // Lê a nova descrição da tarefa
-                        tarefas.set(tarefaEscolhida, novaDescricao); // Atualiza a descrição da tarefa escolhida
-                        System.out.println("\nTarefa atualizada com sucesso!");
+                        int tarefaEscolhida = sc.nextInt() - 1; // Lê o número da tarefa escolhida pelo usuário e subtrai 1 para obter o índice correspondente na lista.
+                        sc.nextLine(); // Limpa o buffer do Scanner.
+                        System.out.print("Digite a nova descrição da tarefa: "); // Solicita ao usuário que digite a nova descrição da tarefa.
+                        String novaDescricao = sc.nextLine(); // Lê a nova descrição da tarefa.
+                        tarefas.set(tarefaEscolhida, novaDescricao); // Atualiza a descrição da tarefa na lista.
+                        System.out.print("Digite a nova prioridade da tarefa: ");  // Solicita ao usuário que digite a nova prioridade da tarefa.
+                        String novaPrioridade = sc.nextLine(); // Lê a nova prioridade da tarefa.
+                        prioridades.set(tarefaEscolhida, novaPrioridade); // Atualiza a prioridade da tarefa na lista.
+                        System.out.print("Digite o novo status da tarefa: ");  // Solicita ao usuário que digite o novo status da tarefa.
+                        String novoStatus = sc.nextLine(); // Lê o novo status da tarefa.
+                        status.set(tarefaEscolhida, novoStatus); // Atualiza o status da tarefa na lista.
+                        System.out.println("\nTarefa atualizada com sucesso!"); // Imprime uma mensagem informando que a tarefa foi atualizada com sucesso.
                     }
                 }
                 break;
-                case 4: {
-                // Opção para listar tarefa por código
-                System.out.println("\n---------------------");
-                System.out.println("   LISTAR TAREFA POR CÓDIGO");
-                System.out.println("---------------------");
-                System.out.print("Digite o código da tarefa: ");
-                int codigo = sc.nextInt(); // Lê o código da tarefa
-                sc.nextLine(); // Limpa o buffer do Scanner
+                case 4: { // Opção 4: Listar tarefa por código.
+                    System.out.println("\n---------------------");
+                    System.out.println("   LISTAR TAREFA POR CÓDIGO");
+                    System.out.println("---------------------");
+                    System.out.print("Digite o código da tarefa: "); // Solicita ao usuário que digite o código da tarefa.
+                    int codigo = sc.nextInt(); // Lê o código da tarefa.
+                    sc.nextLine(); // Limpa o buffer do Scanner.
 
-                // Verifica se o código é válido
-                if (codigo < 0 || codigo >= titulo.size()) {
-                    System.out.println("Código de tarefa inválido.");
-                } else {
-                    // Se o código for válido, imprime a tarefa correspondente
-                    System.out.println("Título: " + titulo.get(codigo));
-                    System.out.println("Tarefa: " + tarefas.get(codigo));
-                    System.out.println("Data: " + datas.get(codigo));
-                }
-            }
-            break;
-                case 5: {
-                    System.out.println("\n---------------------");
-                    System.out.println("   Listar por categoria  ");
-                    System.out.println("---------------------");
-                    System.out.println("Digite a categoria :");
-                    String categoriaDigitada =sc.nextLine();
-                        
-                    for (categoria[0].()){
-                        
-                        
+                    if (codigo < 0 || codigo >= titulo.size()) { // Verifica se o código é válido (ou seja, se corresponde a uma tarefa existente).
+                        System.out.println("Código de tarefa inválido."); // Se o código não for válido, imprime uma mensagem de erro.
+                    } else { // Se o código for válido...
+                        // Imprime os detalhes da tarefa correspondente ao código.
+                        System.out.println("Título: " + titulo.get(codigo));
+                        System.out.println("Tarefa: " + tarefas.get(codigo));
+                        System.out.println("Data: " + datas.get(codigo));
+                        System.out.println("Prioridade: " + prioridades.get(codigo)); 
+                        System.out.println("Status: " + status.get(codigo)); 
                     }
                 }
-                case 6:{
-                    // Opção para sair do programa
-                    System.out.println("\n---------------------");
-                    System.out.println("   SAIR");
-                    System.out.println("---------------------");
-                    System.out.println("Saindo do programa...");
-                    System.exit(0);
-                }
                 break;
-                
+            case 5: { //opção 5 : excluir tarefas armazenadas
+                System.out.println("\n---------------------");
+                System.out.println("   EXCLUIR TAREFA");
+                System.out.println("---------------------");
+                if (tarefas.isEmpty()) {//verifica se há tarefas a excluir  
+                    System.out.println("Não há tarefas para excluir.");
+                } else {
+                    System.out.println("Digite o número da tarefa que deseja excluir:");// Solicita ao usuário que digite o código da tarefa.
+                    for (int i = 0; i < tarefas.size(); i++) {
+                        System.out.println((i + 1) + ". " + tarefas.get(i));
+                    }// verififica se tem tarefas com o codigo digitado 
+                    int tarefaExcluir = sc.nextInt() - 1;
+                    sc.nextLine();
+                    if (tarefaExcluir < 0 || tarefaExcluir >= tarefas.size()) {
+                        System.out.println("Número de tarefa inválido."); //Se o codigo for invalido mostra essa mensagem
+                    } else { //Se o numero for valido ele exclui todas as informações da terefa
+                        titulo.remove(tarefaExcluir);
+                        tarefas.remove(tarefaExcluir);
+                        datas.remove(tarefaExcluir);
+                        prioridades.remove(tarefaExcluir);
+                        status.remove(tarefaExcluir);
+                        System.out.println("Tarefa excluída com sucesso!");//mensagem mostrada se a tarefa for excluida
+                    }
+                }
+                break; // fim do case 5.
+        }
 
                 default:
-                    // Se o usuário digitar uma opção inválida, imprime uma mensagem de erro
                     System.out.println("\nOpção inválida. Por favor,"
                             + " escolha uma opção válida.");
+                    // Mensagem mostrada se escolher um numero que não esteja entre 1 e 6 no menu .
             }
-        } while (opcao != 4); // O loop do menu continua até que o usuário escolha a opção para sair
+        } while (opcao != 6); // Fim do loop do-while .
     }
 }
-
